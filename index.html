@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)https://seungmini852-cell.github.io/TBM/ -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TBM 활동일지</title>
+<link href="./TBM 활동일지_files/css2" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f7f8fa;--white:#fff;--border:#dde1e7;--accent:#2563eb;--al:#eff6ff;--text:#1e293b;--muted:#64748b;--hbg:#1e3a5f;--green:#16a34a}
+body{background:var(--bg);font-family:'Noto Sans KR',sans-serif;color:var(--text)}
+.lock{position:fixed;inset:0;background:var(--hbg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:16px}
+.lock-title{color:#fff;font-size:18px;font-weight:700}
+.lock-input{background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.25);border-radius:12px;color:#fff;font-size:20px;letter-spacing:6px;padding:12px 24px;outline:none;text-align:center;width:220px;font-family:'Noto Sans KR',sans-serif}
+.lock-input:focus{border-color:#3b82f6}
+.lock-input::placeholder{color:rgba(255,255,255,.35);letter-spacing:2px;font-size:13px}
+.lock-btn{background:#2563eb;color:#fff;border:none;border-radius:10px;padding:13px 44px;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:700;cursor:pointer;width:220px}
+.lock-err{color:#fca5a5;font-size:13px;min-height:20px;text-align:center}
+.topbar{background:var(--hbg);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.topbar-title{font-size:15px;font-weight:700}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 40px}
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.card-head{background:#f1f5f9;border-bottom:1px solid var(--border);padding:10px 16px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+.card-body{padding:14px 16px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.mt10{margin-top:10px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:11px;color:var(--muted);font-weight:600}
+.field input,.field select,.field textarea{background:#f8fafc;border:1px solid var(--border);border-radius:7px;font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--text);padding:8px 11px;outline:none;width:100%;transition:border-color .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);background:var(--al)}
+.field textarea{resize:vertical;min-height:80px;line-height:1.7}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.chip{background:#f1f5f9;border:1px solid var(--border);border-radius:20px;padding:4px 11px;font-size:11px;color:var(--muted);cursor:pointer;transition:all .15s}
+.chip:hover{border-color:var(--accent);color:var(--accent);background:var(--al)}
+.gen-btn{width:100%;padding:15px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:14px}
+.preview-card{background:var(--white);border:2px solid var(--accent);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.preview-head{background:var(--accent);color:#fff;text-align:center;padding:12px;font-size:14px;font-weight:700;letter-spacing:3px}
+.tbm-table{width:100%;border-collapse:collapse;font-size:12px}
+.tbm-table td{border:1px solid #cbd5e1;padding:7px 9px;vertical-align:top;line-height:1.7}
+.lc{background:#f1f5f9;font-weight:700;color:#334155;text-align:center;font-size:11px;white-space:nowrap}
+.gc{color:#1d4ed8;font-weight:500;white-space:pre-line}
+.dl-row{display:flex;gap:10px;margin-top:14px}
+.dl-btn{flex:1;padding:12px;border-radius:9px;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:none}
+.dl-btn.excel{background:var(--green);color:#fff}
+.dl-btn.copy{background:#f1f5f9;color:var(--text);border:1px solid var(--border)}
+@media(max-width:480px){.g3{grid-template-columns:1fr 1fr}}
+.key-section{background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:#92400e}
+.key-section input{width:100%;margin-top:6px;padding:8px 10px;border:1px solid #fcd34d;border-radius:6px;font-size:12px;background:white;outline:none;font-family:'Noto Sans KR',sans-serif}
+.ai-btn{width:100%;padding:13px;background:#7c3aed;color:#fff;border:none;border-radius:10px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px}
+.ai-btn:hover{background:#6d28d9}
+.ai-badge{display:inline-block;background:#7c3aed;color:white;font-size:10px;padding:2px 7px;border-radius:10px;margin-left:6px;vertical-align:middle}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- 비밀번호 잠금 -->
+<div class="lock" id="lockScreen">
+  <div style="font-size:48px">🔒</div>
+  <div class="lock-title">TBM 일지 시스템</div>
+  <input class="lock-input" type="password" id="lockInput" placeholder="비밀번호 입력" maxlength="10" onkeydown="if(event.key===&#39;Enter&#39;)checkPw()">
+  <button class="lock-btn" onclick="checkPw()">🔓 입장하기</button>
+  <div class="lock-err" id="lockErr"></div>
+</div>
+
+<div class="topbar">
+  <div class="topbar-title">⛏ TBM 활동일지 자동생성기</div>
+</div>
+
+<div class="wrap">
+  <div class="key-section">
+    🔑 Claude API Key <span style="font-size:10px;color:#b45309">(AI 자동생성 기능용 — 최초 1회)</span>
+    <input type="password" id="apiKey" placeholder="sk-ant-..." oninput="localStorage.setItem(&#39;tbm_apikey&#39;,this.value)">
+  </div>
+  <div class="card">
+    <div class="card-head">🏗 현장 정보</div>
+    <div class="card-body">
+      <div class="g2">
+        <div class="field"><label>공사명</label><input type="text" id="projectName"></div>
+        <div class="field"><label>작업장소</label><input type="text" id="location"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head">📋 기본 정보</div>
+    <div class="card-body">
+      <div class="g3">
+        <div class="field"><label>작업일시</label><input type="date" id="date"></div>
+        <div class="field"><label>투입인원</label><input type="number" id="workers" placeholder="명"></div>
+        <div class="field"><label>현장점검</label>
+          <select id="inspect"><option>예</option><option>아니요</option></select>
+        </div>
+      </div>
+      <div class="g2 mt10">
+        <div class="field"><label>공종</label><input type="text" id="workType" placeholder="예) 굴착 및 터파기"></div>
+        <div class="field"><label>투입장비</label><input type="text" id="equip"></div>
+      </div>
+      <div class="g2 mt10">
+        <div class="field"><label>작업장 특이사항</label><input type="text" id="special" placeholder="없음"></div>
+        <div class="field"><label>복장/보호구</label>
+          <select id="ppe">
+            <option value="양   호">양호</option>
+            <option value="불 량">불량</option>
+            <option value="일부 미착용">일부 미착용</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head">📝 TBM 내용 입력</div>
+    <div class="card-body">
+      <div class="field" style="margin-bottom:10px"><label>지시사항</label><textarea id="jisi" placeholder="1. 내용
+2. 내용
+3. 내용"></textarea></div>
+      <div class="field" style="margin-bottom:10px"><label>위험요인</label><textarea id="risk" placeholder="1. 내용
+2. 내용
+3. 내용"></textarea></div>
+      <div class="field" style="margin-bottom:10px"><label>위험요인 통제방안</label><textarea id="ctrl" placeholder="1. 내용
+2. 내용
+3. 내용"></textarea></div>
+      <div class="field"><label>근로자 의견</label><textarea id="opinion" placeholder="1. 내용
+2. 내용
+3. 내용" style="min-height:60px"></textarea></div>
+    </div>
+  </div>
+
+  <button class="ai-btn" onclick="aiGenerate()">⚡ AI로 TBM 내용 자동생성 <span class="ai-badge">AI</span></button>
+<button class="gen-btn" onclick="preview()">📋 미리보기 + Excel 준비</button>
+
+  <div id="previewWrap" style="display:none">
+    <div class="preview-card">
+      <div class="preview-head">TBM(Tool Box Meeting) 활동일지</div>
+      <table class="tbm-table">
+        <tbody><tr>
+          <td class="lc" rowspan="3" style="width:52px">TBM<br>개요</td>
+          <td class="lc" style="width:60px">작업장</td>
+          <td colspan="2" class="gc" id="p_project"></td>
+          <td class="lc">작업내용</td>
+          <td class="gc" id="p_work" colspan="2"></td>
+        </tr>
+        <tr>
+          <td class="lc">작업일시</td>
+          <td colspan="2" class="gc" id="p_date"></td>
+          <td class="lc">작업인원</td>
+          <td class="gc" id="p_workers" colspan="2"></td>
+        </tr>
+        <tr>
+          <td class="lc">작업장소</td>
+          <td colspan="2" class="gc" id="p_location"></td>
+          <td class="lc">특이사항</td>
+          <td class="gc" id="p_special" colspan="2"></td>
+        </tr>
+        <tr>
+          <td class="lc" colspan="2">현장점검</td>
+          <td colspan="2">■ 예  □ 아니요</td>
+          <td class="lc">복장/보호구</td>
+          <td class="gc" id="p_ppe" colspan="2"></td>
+        </tr>
+        <tr>
+          <td class="lc" colspan="2">지시사항</td>
+          <td colspan="2" id="p_jisi" class="gc"></td>
+          <td class="lc">기타사항</td>
+          <td colspan="2"></td>
+        </tr>
+        <tr>
+          <td class="lc" colspan="2">위험요인</td>
+          <td colspan="2" id="p_risk" class="gc"></td>
+          <td class="lc">위험요인<br>통제방안</td>
+          <td colspan="2" id="p_ctrl" class="gc"></td>
+        </tr>
+        <tr>
+          <td class="lc" colspan="2">근로자 의견</td>
+          <td colspan="2" id="p_opinion" class="gc"></td>
+          <td class="lc">투입장비</td>
+          <td colspan="2" class="gc" id="p_equip"></td>
+        </tr>
+      </tbody></table>
+    </div>
+    <div class="dl-row">
+      <button class="dl-btn excel" onclick="dlExcel()">📥 Excel 다운로드</button>
+      <button class="dl-btn copy" onclick="dlCopy()">📋 전체 복사</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── 비밀번호 (전역, 즉시 실행) ──
+var PW = '418912';
+function checkPw() {
+  var v = document.getElementById('lockInput').value;
+  if (v === PW) {
+    sessionStorage.setItem('tbm_auth','1');
+    document.getElementById('lockScreen').style.display='none';
+  } else {
+    document.getElementById('lockErr').textContent='비밀번호가 틀렸어요';
+    document.getElementById('lockInput').value='';
+    document.getElementById('lockInput').focus();
+  }
+}
+if (sessionStorage.getItem('tbm_auth')==='1') {
+  document.getElementById('lockScreen').style.display='none';
+}
+
+// ── 초기화 ──
+document.getElementById('date').value = new Date().toISOString().split('T')[0];
+var sp=localStorage.getItem('tbm_p'), sl=localStorage.getItem('tbm_l');
+if(sp) document.getElementById('projectName').value=sp;
+if(sl) document.getElementById('location').value=sl;
+document.getElementById('projectName').oninput=function(e){localStorage.setItem('tbm_p',e.target.value);};
+document.getElementById('location').oninput=function(e){localStorage.setItem('tbm_l',e.target.value);};
+
+// API Key 불러오기
+var savedKey=localStorage.getItem('tbm_apikey');
+if(savedKey) document.getElementById('apiKey').value=savedKey;
+
+// AI 자동생성
+function aiGenerate(){
+  var apiKey=document.getElementById('apiKey').value.trim();
+  if(!apiKey){alert('API Key를 입력해주세요!\n(상단 황색 박스)');return;}
+  var workType=document.getElementById('workType').value;
+  var workers=document.getElementById('workers').value;
+  var equip=document.getElementById('equip').value;
+  var projectName=document.getElementById('projectName').value;
+  if(!workType){alert('공종(작업내용)을 먼저 입력해주세요!');return;}
+
+  var btn=document.querySelector('.ai-btn');
+  btn.innerHTML='<span class="spinner"></span> AI 생성 중...';
+  btn.disabled=true;
+
+  var prompt='당신은 건설현장 안전관리 전문가입니다. TBM(Tool Box Meeting) 일지를 작성해주세요.\n\n공사명: '+projectName+'\n공종: '+workType+'\n투입인원: '+workers+'명\n투입장비: '+equip+'\n\n아래 4개 항목을 각각 3개씩 번호를 붙여 작성하세요 (1. 내용\n2. 내용\n3. 내용 형식).\n\n반드시 JSON만 응답:\n{"지시사항":"1. 내용\\n2. 내용\\n3. 내용","위험요인":"1. 내용\\n2. 내용\\n3. 내용","통제방안":"1. 내용\\n2. 내용\\n3. 내용","근로자의견":"1. 내용\\n2. 내용\\n3. 내용"}';
+
+  fetch('https://broken-hill-6f25.seungmini852.workers.dev',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:2000,messages:[{role:'user',content:prompt}]})
+  }).then(function(r){return r.json();}).then(function(data){
+    if(data.error) throw new Error(data.error.message);
+    var text=data.content[0].text;
+    var cleaned=text.replace(/```json|```/g,'').trim();
+    var m=cleaned.match(/\{[\s\S]*\}/);
+    if(!m) throw new Error('AI 응답에서 JSON을 찾을 수 없습니다.');
+    var json=JSON.parse(m[0]);
+    document.getElementById('jisi').value=json['지시사항']||'';
+    document.getElementById('risk').value=json['위험요인']||'';
+    document.getElementById('ctrl').value=json['통제방안']||'';
+    document.getElementById('opinion').value=json['근로자의견']||'';
+    btn.innerHTML='⚡ AI로 TBM 내용 자동생성 <span class="ai-badge">AI</span>';
+    btn.disabled=false;
+  }).catch(function(e){
+    alert('오류: '+e.message);
+    btn.innerHTML='⚡ AI로 TBM 내용 자동생성 <span class="ai-badge">AI</span>';
+    btn.disabled=false;
+  });
+}
+
+// ── 데이터 ──
+var g={};
+function preview(){
+  var date=document.getElementById('date').value;
+  var d=new Date(date);
+  var dateStr=date?d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일':'';
+  var mmdd=(date||'').replace(/-/g,'').slice(2,8);
+  g={
+    date:date, dateStr:dateStr, mmdd:mmdd,
+    workers:document.getElementById('workers').value,
+    workType:document.getElementById('workType').value,
+    equip:document.getElementById('equip').value,
+    special:document.getElementById('special').value||'없음',
+    ppe:document.getElementById('ppe').value,
+    projectName:document.getElementById('projectName').value,
+    location:document.getElementById('location').value,
+    jisi:document.getElementById('jisi').value,
+    risk:document.getElementById('risk').value,
+    ctrl:document.getElementById('ctrl').value,
+    opinion:document.getElementById('opinion').value
+  };
+  document.getElementById('p_project').textContent=g.projectName;
+  document.getElementById('p_date').textContent=g.dateStr;
+  document.getElementById('p_work').textContent=g.workType;
+  document.getElementById('p_workers').textContent=g.workers?g.workers+'명':'';
+  document.getElementById('p_location').textContent=g.location;
+  document.getElementById('p_special').textContent=g.special;
+  document.getElementById('p_ppe').textContent=g.ppe;
+  document.getElementById('p_equip').textContent=g.equip;
+  document.getElementById('p_jisi').textContent=g.jisi;
+  document.getElementById('p_risk').textContent=g.risk;
+  document.getElementById('p_ctrl').textContent=g.ctrl;
+  document.getElementById('p_opinion').textContent=g.opinion;
+  document.getElementById('previewWrap').style.display='block';
+  document.getElementById('previewWrap').scrollIntoView({behavior:'smooth'});
+}
+
+// ── Excel: ExcelJS 동적 로드 후 실행 ──
+function dlExcel(){
+  if(!g.date){alert('미리보기를 먼저 눌러주세요!');return;}
+  if(typeof ExcelJS==='undefined'){
+    var s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js';
+    s.onload=function(){buildExcel();};
+    s.onerror=function(){alert('Excel 라이브러리 로드 실패. 인터넷 연결을 확인하세요.');};
+    document.head.appendChild(s);
+  } else {
+    buildExcel();
+  }
+}
+
+async function buildExcel(){
+  var wb=new ExcelJS.Workbook();
+  var ws=wb.addWorksheet(g.mmdd+'_TBM');
+
+  // 페이지 설정
+  ws.pageSetup={
+    paperSize:9, orientation:'portrait',
+    printArea:'A1:I15',
+    horizontalCentered:true, verticalCentered:false,
+    margins:{left:0.5,right:0.5,top:0.5,bottom:0.5,header:1.3,footer:1.3}
+  };
+
+  // 열 너비
+  ws.columns=[
+    {width:22},{width:12},{width:10},{width:22},
+    {width:10},{width:10},{width:2},{width:5},{width:17}
+  ];
+
+  // 행 높이
+  [92,21,76,7,43,22,43,43,43,160,160,160,43,43,220].forEach(function(h,i){
+    ws.getRow(i+1).height=h;
+  });
+
+  // 스타일 헬퍼
+  var GN='맑은 고딕';
+  var SZ=12;
+  function f(sz,bd){return {name:GN,size:sz||SZ,bold:!!bd};}
+  function a(h,v,w){return {horizontal:h||'center',vertical:v||'middle',wrapText:!!w};}
+  var TN={style:'thin'}, MD={style:'thin'};
+  function b(l,r,t,bt){
+    return {left:l||TN,right:r||TN,top:t||TN,bottom:bt||TN};
+  }
+  var bSTD=b(), bML=b(TN,TN,TN,TN), bMR=b(TN,TN,TN,TN);
+  var bMB=b(TN,TN,TN,TN), bMT=b(TN,TN,TN,TN);
+  var bALL=b(TN,TN,TN,TN);
+  var bMLB=b(TN,TN,TN,TN), bMRB=b(TN,TN,TN,TN);
+  var bMLT=b(TN,TN,TN,TN), bMRT=b(TN,TN,TN,TN);
+  var bMLMR=b(TN,TN,TN,TN), bBOT_ALL=b(TN,TN,TN,TN);
+
+  function sc(addr,val,fnt,al,bdr){
+    var c=ws.getCell(addr);
+    if(val!==null&&val!==undefined) c.value=val;
+    c.font=fnt||f();
+    c.alignment=al||a();
+    if(bdr) c.border=bdr;
+  }
+
+  // ── 1행: 제목 ──
+  ws.mergeCells('A1:I1');
+  sc('A1','TBM(TooL  Box  Meeting)활동일지',f(16,true),a('center','middle'),null);
+  ws.getCell('A1').font={name:GN,size:22,bold:true};
+
+  // ── 2행: 서명 헤더 ──
+  ws.mergeCells('A2:E2');
+  sc('A2',null,f(),a(),null);
+  ws.mergeCells('F2:H2');
+  sc('F2','현장대리인',f(),a(),bSTD);
+  ws.getCell('F2').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  sc('I2','책임감리원',f(),a(),bSTD);
+  ws.getCell('I2').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+
+  // ── 3행: 서명칸 ──
+  ws.mergeCells('A3:E3');
+  sc('A3',null,f(),a(),null);
+  ws.mergeCells('F3:H3');
+  sc('F3',null,f(),a(),bSTD);
+  sc('I3',null,f(),a(),bSTD);
+
+  // ── 4행 구분 ──
+  ws.mergeCells('A4:I4');
+  sc('A4',null,f(),a(),null);
+
+  // ── 5~7행: TBM개요 ──
+  ws.mergeCells('A5:A7');
+  sc('A5','TBM\n개  요',f(),a('center','middle',true),bML);
+  ws.getCell('A5').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+
+  ws.mergeCells('E5:F6');
+  ws.mergeCells('G5:I6');
+
+  // 5행
+  sc('B5','작업장',f(),a(),bSTD);
+  ws.getCell('B5').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('C5:D5');
+  sc('C5',g.projectName,f(),a('center','middle'),bSTD);
+  sc('E5','작업내용',f(),a(),bSTD);
+  ws.getCell('E5').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  sc('G5',g.workType,f(),a('center','middle'),b(TN,TN,TN,TN));
+
+  // 6행
+  sc('B6','작업일시',f(),a(),bSTD);
+  ws.getCell('B6').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('C6:D6');
+  sc('C6',g.dateStr,f(),a('center','middle'),bSTD);
+  sc('E6',null,f(),a(),bSTD);
+  sc('F6',null,f(),a(),bSTD);
+
+  // 7행
+  sc('B7','작업장소',f(),a(),bSTD);
+  ws.getCell('B7').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('C7:D7');
+  sc('C7',g.location,f(),a('left','middle',true),bSTD);
+  ws.mergeCells('E7:F7');
+  sc('E7','작업인원',f(),a(),bSTD);
+  ws.getCell('E7').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('G7:I7');
+  sc('G7',g.workers?g.workers+'명':'',f(),a('center','middle'),b(TN,TN,TN,TN));
+
+  // ── 8행 ──
+  sc('A8','현장점검여부',f(),a(),bML);
+  ws.getCell('A8').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('B8:D8');
+  sc('B8','■  예                         □  아니요',f(),a(),bSTD);
+  ws.mergeCells('E8:F8');
+  sc('E8','작업장  특이사항',f(),a(),bSTD);
+  ws.getCell('E8').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('G8:I8');
+  sc('G8',g.special,f(),a('center','middle'),b(TN,TN,TN,TN));
+
+  // ── 9행 ──
+  sc('A9','근로자  건강상태',f(),a(),bML);
+  ws.getCell('A9').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('B9:D9');
+  sc('B9','양   호',f(),a(),bSTD);
+  ws.mergeCells('E9:F9');
+  sc('E9','근로자 복장  및\n보호구  착용상태',f(),a('center','middle',true),bSTD);
+  ws.getCell('E9').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('G9:I9');
+  sc('G9',g.ppe,f(),a('center','middle'),b(TN,TN,TN,TN));
+
+  // ── 10행 ──
+  sc('A10','지시사항',f(),a(),bML);
+  ws.getCell('A10').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('B10:D10');
+  sc('B10',g.jisi,f(),a('left','top',true),bSTD);
+  ws.mergeCells('E10:F10');
+  sc('E10','기타사항',f(),a(),bSTD);
+  ws.getCell('E10').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('G10:I10');
+  sc('G10',null,f(),a(),b(TN,TN,TN,TN));
+
+  // ── 11행 ──
+  sc('A11','위험요인',f(),a(),bML);
+  ws.getCell('A11').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('B11:D11');
+  sc('B11',g.risk,f(),a('left','top',true),bSTD);
+  ws.mergeCells('E11:F11');
+  sc('E11','위험요인 통제방안',f(),a('center','middle',true),bSTD);
+  ws.getCell('E11').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('G11:I11');
+  sc('G11',g.ctrl,f(),a('left','top',true),b(TN,TN,TN,TN));
+
+  // ── 12행 ──
+  sc('A12','근로자  의견',f(),a(),bML);
+  ws.getCell('A12').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('B12:D12');
+  sc('B12',g.opinion,f(),a('left','top',true),bSTD);
+  ws.mergeCells('E12:F12');
+  sc('E12','위험 예측훈련',f(),a(),bSTD);
+  ws.getCell('E12').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+  ws.mergeCells('G12:I12');
+  sc('G12',null,f(),a(),b(TN,TN,TN,TN));
+
+  // ── 13행 ──
+  ws.mergeCells('A13:I13');
+  sc('A13','참여자  명단 (※ 별첨)',f(),a(),b(TN,TN,TN,TN));
+  ws.getCell('A13').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFEEEEEE'}};
+
+  // ── 14행 ──
+  ws.mergeCells('A14:G14');
+  sc('A14','TBM  활동사진',f(),a(),b(TN,TN,TN,TN));
+  ws.getCell('A14').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF404040'}};
+  ws.getCell('A14').font={name:GN,size:SZ,bold:false,color:{argb:'FFFFFFFF'}};
+  ws.mergeCells('H14:I14');
+  sc('H14','투입장비',f(),a(),b(TN,TN,TN,TN));
+  ws.getCell('H14').fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF404040'}};
+  ws.getCell('H14').font={name:GN,size:SZ,bold:false,color:{argb:'FFFFFFFF'}};
+
+  // ── 15행 ──
+  ws.mergeCells('A15:C15');
+  sc('A15',null,f(),a(),b(TN,TN,TN,TN));
+  ws.mergeCells('D15:G15');
+  sc('D15',null,f(),a(),b(TN,TN,TN,TN));
+  ws.mergeCells('H15:I15');
+  sc('H15',g.equip,f(),a('left','top',true),b(TN,TN,TN,TN));
+
+  // 다운로드
+  var buf=await wb.xlsx.writeBuffer();
+  var blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  var url=URL.createObjectURL(blob);
+  var a2=document.createElement('a');
+  a2.href=url;
+  a2.download=g.mmdd+'_TBM.xlsx';
+  document.body.appendChild(a2);
+  a2.click();
+  document.body.removeChild(a2);
+  URL.revokeObjectURL(url);
+}
+
+function dlCopy(){
+  if(!g.jisi){alert('미리보기를 먼저 눌러주세요!');return;}
+  var t='[지시사항]\n'+g.jisi+'\n\n[위험요인]\n'+g.risk+'\n\n[위험요인 통제방안]\n'+g.ctrl+'\n\n[근로자 의견]\n'+g.opinion;
+  navigator.clipboard.writeText(t).then(function(){alert('복사됐어요!');});
+}
+
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('tbm_sw.js').catch(function(){});
+}
+</script>
+
+<deepl-input-controller translate="no"><template shadowrootmode="open"><link rel="stylesheet" href="chrome-extension://cofdbpoegempjloogbagkncekinflcnj/build/content.css"><div dir="ltr" style="visibility: initial !important;"><div class="dl-input-translation-container svelte-95aucy"><div></div></div></div></template></deepl-input-controller></body></html>
